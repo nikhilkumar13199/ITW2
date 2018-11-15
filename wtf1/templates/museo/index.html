@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+	<style type="text/css">
+		body{
+			background-color: #e6e6fa;
+		}
+		.list-row{
+			background-color: #a0aaad;
+			
+		}
+	</style>
+</head>
+<body>
+	<h1>Movies list</h1>
+
+	<h2>
+		{% if user.is_authenticated %}
+      		Hi {{ user.username }}!
+     		<a href="{% url 'museo:logout' %}">logout</a>
+    	{% else %}
+      		<a href="{% url 'museo:login' %}">login</a>
+      		<a href="{% url 'museo:register' %}">Sign Up</a>
+    	{% endif %}
+	</h2>
+	<form action="{% url 'museo:index' %}" method="post">
+		<table>
+			<tr>
+				<td class="list-row">Movie id</td>
+				<td class="list-row">Movie</td>
+				<td class="list-row">Year</td>
+				<td class="list-row">IMDB</td>
+				<td class="list-row">Tomatometer</td>
+			</tr> 
+			{% for b in row %}
+			<tr class="list-row">
+				{% for x in b %}
+				<td>
+					{{ x }}
+				</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+		{% csrf_token %}
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feed</title>
+	<style type="text/css">
+		body{
+			background-color: #e6e6fa;
+		}
+		.list-row{
+			background-color: #a0aaad;
+			
+		}
+	</style>
+</head>
+<body>
+	<form method="post" action="{% url 'museo:feed' %}">
+
+		<table>
+			<tr class="list-row">
+				<td>Post id</td>
+				<td>User id</td>
+				<td>Upvotes</td>
+				<td>Downvotes</td>
+				<td>Material</td>
+				<td>film id</td>
+			</tr>
+			{% for b in row %}
+			<tr class="list-row">
+				{% for x in b %}
+				<td>
+					{{ x }}
+				</td>
+				{% endfor %}
+				<td>
+					<input type="radio" name="upvote" id="{{ b.0 }}" value="{{b.0}}"></input>
+					<label for="{{ b.0 }}">Upvote</label>
+				</td>
+				<td>
+					<input type="radio" name="downvote" id="{{ b.0 }}" value="{{b.0}}"></input>
+					<label for="{{ b.0 }}">Downvote</label>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% csrf_token %}
+		<input type="submit" name="submit" value="submit" >
+	</form>
+
+</body>
+</html>
