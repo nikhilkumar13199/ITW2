@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style type="text/css">
+      	body{
+      		margin: 20px;
+      		padding: 20px;
+      		
+      	}
+
+      	#text_in_feed_button{
+      		color: black;
+      	}
+
+      	
+      </style>
+
+      <title>Create a Post</title>
+    </head>
+
+    <body>
+    	<a href="/museo/logout" class="waves-effect btn teal lighten-3 " id="logout_button">Logout</a>
+    	<br>
+      <form method="POST" action="{% url 'museo:createpost' %}">
+      	{% csrf_token %}
+		<h1 class="header">Write your post here</h1>
+		<input type="text" name="content" placeholder="Write the content here">
+		{% if user.is_authenticated %}
+		<h4>Hello {{ user.username }}</h4>
+		<center><input type="submit" name="Publish" value="Publish" class="waves-effect btn-large teal lighten-3">
+		<a href="/museo/feed" class="waves-effect btn-large teal lighten-3"><div id="text_in_feed_button">Feed</div></a></center>
+		{% else %}
+		<h4>Please login to publish</h4>
+		<a href="/museo/login" class="waves-effect btn teal lighten-3">Login</a>
+		<center><input type="submit" name="Publish" value="Publish" class="waves-effect btn-large teal lighten-3 disabled">
+		<a href="/museo/feed" class="waves-effect btn-large teal lighten-3"><div id="text_in_feed_button">Feed</div></a></center>
+		{% endif %}
+		
+	</form>
+      <!--JavaScript at end of body for optimized loading-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    </body>
+  </html>

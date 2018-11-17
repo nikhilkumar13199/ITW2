@@ -14,14 +14,17 @@
 </head>
 <body>
 	<h1>Movies list</h1>
+	
 
 	<h2>
 		{% if user.is_authenticated %}
       		Hi {{ user.username }}!
      		<a href="{% url 'museo:logout' %}">logout</a>
+     		<a href="/museo/feed">Feed</a>
     	{% else %}
       		<a href="{% url 'museo:login' %}">login</a>
       		<a href="{% url 'museo:register' %}">Sign Up</a>
+      		<a href="/museo/feed">Feed</a>
     	{% endif %}
 	</h2>
 	<form action="{% url 'museo:index' %}" method="post">

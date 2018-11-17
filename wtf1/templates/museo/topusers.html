@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Top Users</title>
+	<style type="text/css">
+		body{
+			background-color: #e6e6fa;
+		}
+		.list-row{
+			background-color: #a0aaad;
+			
+		}
+	</style>
+</head>
+<body>
+	<form action="{% url 'museo:index' %}" method="post">
+		<table>
+			<tr class="list-row">
+				<td>User ID</td>
+				<td>Total Upvotes</td>
+				<td>Total Downvotes</td>
+			</tr> 
+			{% for b in row %}
+			<tr class="list-row">
+				{% for x in b %}
+				<td>
+					{{ x }}
+				</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+		{% csrf_token %}
+	</form>
+</body>
+</html>
+
