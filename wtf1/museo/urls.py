@@ -11,4 +11,7 @@ urlpatterns = [
     path('login/',auth_views.login, {'template_name':'login.html'},name='login'),
     path('logout/',auth_views.logout,{'template_name':'logged_out.html'},name='logout'),
     path('feed/',views.feed,name='feed'),
+    path('createpost/',views.createpost,name='createpost'),
+    path('topusers/',views.topusers,name='topusers'),
+    path('index2/',views.index2,name='index2'),
 ]

@@ -5,24 +5,93 @@
 	<style type="text/css">
 		body{
 			background-color: #e6e6fa;
+			margin: 0;
 		}
 		.list-row{
 			background-color: #a0aaad;
 			
 		}
+
+		.error{
+			color: red;
+			font-weight: bold;
+		}
+
+		.submit-btn{
+			top:100px;
+			right:100px;
+			position: fixed;
+			padding: 15px;
+			border-radius: 5px;
+
+		}
+
+		.mynav{
+			/*padding: 14px 16px;*/
+			background-color: #775e7a;
+			overflow: hidden;
+			
+		}
+
+		.mynav a{
+			float: left;
+			text-align: center;
+			padding: 10px 12px;
+			text-decoration: none;
+			font-size: 25px;
+			color: white;
+			transition-duration: 0.8s;
+			
+		}
+
+		.mynav a:hover{
+			background-color: #8ddfcc;
+			
+		}
+		.profile-btn{
+			float: right;
+		}
+
+		
 	</style>
 </head>
 <body>
-	<form method="post" action="{% url 'museo:feed' %}">
 
+	<form method="post" action="{% url 'museo:feed' %}">
+		{% csrf_token %}
+		<header>
+			{% if user.is_authenticated %}
+			<div class="mynav">
+				<a href="/museo/index">Movies List</a>
+				<a href="/museo/logout">Logout</a>
+				<a href="/museo/createpost">Write</a>
+				<a href="/museo/feed">Feed</a>
+				<a href="#" class="profile-btn">{{ user.username }}</a>
+			</div>
+			{% else %}
+			<div class="mynav">
+				<a href="/museo/index">Movies List</a>
+				<a href="/museo/createpost">Write</a>
+				<a href="/museo/feed">Feed</a>
+				<a href="/museo/login" class="profile-btn">Login</a>
+			</div>
+			{% endif %}
+		</header>
+		{% if messages %}
+			{% for i in messages %}
+			<center><p class="error">{{ i }}</p></center>
+			{% endfor %}
+		{% endif %}
+		<h3>Hello {{ user.username }}!</h3>
+		
 		<table>
 			<tr class="list-row">
 				<td>Post id</td>
 				<td>User id</td>
+				<td>Username</td>
+				<td>Material</td>
 				<td>Upvotes</td>
 				<td>Downvotes</td>
-				<td>Material</td>
-				<td>film id</td>
 			</tr>
 			{% for b in row %}
 			<tr class="list-row">
@@ -32,18 +101,29 @@
 				</td>
 				{% endfor %}
 				<td>
+					{% if user.is_authenticated %}
 					<input type="radio" name="upvote" id="{{ b.0 }}" value="{{b.0}}"></input>
 					<label for="{{ b.0 }}">Upvote</label>
+					{% else %}
+					<input type="radio" name="upvote" id="{{ b.0 }}" value="{{b.0}}" disabled=""></input>
+					<label for="{{ b.0 }}">Upvote</label>
+					{% endif %}
 				</td>
 				<td>
+					{% if user.is_authenticated %}
 					<input type="radio" name="downvote" id="{{ b.0 }}" value="{{b.0}}"></input>
 					<label for="{{ b.0 }}">Downvote</label>
+					{% else %}
+					<input type="radio" name="downvote" id="{{ b.0 }}" value="{{b.0}}" disabled=""></input>
+					<label for="{{ b.0 }}">Downvote</label>
+					{% endif %}
+				
 				</td>
 			</tr>
 			{% endfor %}
 		</table>
-		{% csrf_token %}
-		<input type="submit" name="submit" value="submit" >
+		
+		<input type="submit" name="submit" value="submit" class="submit-btn">
 	</form>
 
 </body>

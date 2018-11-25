@@ -7,8 +7,20 @@
 	<h1>Sign up here!</h1>
 	<form method="post" action="{% url 'museo:register' %}">
 		{% csrf_token %}
-		{{ form }}
-		<input type="submit" name="Sign Up">
+		{% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+		
 	</form>
 
 </body>
